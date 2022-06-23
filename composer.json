@@ -1,0 +1,17 @@
+{
+    "name": "marif/xcode-login",
+    "require": {
+        "firebase/php-jwt": "^6.2"
+    },
+    "autoload": {
+        "psr-4": {
+            "Marif\\XcodeLogin\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "mariaazurita",
+            "email": "maria.zurita@abundas.co"
+        }
+    ]
+}
