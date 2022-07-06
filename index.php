@@ -1,29 +1,34 @@
 <?php
 require_once('Login.php');
+include ('ContactTable.php');
 header('Access-Control-Allow-Origin: *');
-header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method");
+header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
 header("Allow: GET, POST, OPTIONS, PUT, DELETE");
 $method = $_SERVER['REQUEST_METHOD'];
 if($method == "OPTIONS") {
     die();
 }
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+$uri = explode( '/', $uri );
 
-static $loggedIn = false;
+ 
+if ((isset($uri[1]) && $uri[1] != 'Xcode-Login') || !isset($uri[3])) {
+    header("HTTP/1.1 404 Not Found");
+    exit();
+}
 
-if(true){
+$stringCheck = $uri[3];
 
+if($stringCheck == 'login'){
     $_POST = json_decode(array_keys($_POST)[0], true);
     $arreglousuarios = ['user' => $_POST["user"], 'password'=> $_POST["password"] ];
-
     if ( ($arreglousuarios['user'])== '' || ($arreglousuarios['password']) == '' )
     {
         $msg = "Usuario o contraseña faltante"; 
         $data = ['message' => $msg];
         echo json_encode($data);
-
     } else {
-
         $loggedIn = validateLogin($arreglousuarios['user'], $arreglousuarios['password']);
         
         if($loggedIn) {
@@ -35,9 +40,13 @@ if(true){
             $data = ['message' => $msg];
             echo json_encode($data);
         }
-
     }
-
+} elseif($uri[3] == 'table') {
+    getTable();
+} elseif($uri[3] == 'status') {
+    $_POST = json_decode(array_keys($_POST)[0], true);
+    
+    updateStatus();
 }
 
 ?>
