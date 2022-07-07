@@ -1,6 +1,7 @@
 <?php
 require_once('Login.php');
 include ('ContactTable.php');
+include ('UpdateStatus.php');
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -43,10 +44,12 @@ if($stringCheck == 'login'){
     }
 } elseif($uri[3] == 'table') {
     getTable();
+
 } elseif($uri[3] == 'status') {
+
     $_POST = json_decode(array_keys($_POST)[0], true);
-    
-    updateStatus();
+    $arregloPatch = ['ID' => $_POST["ID"], 'state'=> $_POST["ESTATUS"] ];
+    updateStatus( $arregloPatch['state'], $arregloPatch['ID']);
 }
 
 ?>

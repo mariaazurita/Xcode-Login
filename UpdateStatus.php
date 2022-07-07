@@ -1,3 +1,4 @@
+<?php
 require_once('DataBase.php');
 
 require_once('./vendor/autoload.php');
@@ -10,9 +11,12 @@ if($method == "OPTIONS") {
     die();
 }
 
-function updateStatus($data, $name) {
+function updateStatus($data, $ID) {
     $db = getConnection();
-    $sql = "UPDATE formulario SET ESTATUS_CONTACTO = $data WHERE Nombre = $name";
+    $sql = "UPDATE formulario 
+            SET ESTATUS_CONTACTO = $data 
+            WHERE Nombre = $ID";
     $result = mysqli_query($db, $sql);
-    return
 }
+
+?>
