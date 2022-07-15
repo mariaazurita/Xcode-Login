@@ -11,12 +11,24 @@ if($method == "OPTIONS") {
     die();
 }
 
-function updateStatus($data, $ID) {
+function deleteComment($ID) {
+    
     $db = getConnection();
     $sql = "UPDATE formulario 
-            SET ESTATUS_CONTACTO = $data 
+            SET COMENTARIO = NULL 
             WHERE idFormulario = $ID";
     $result = mysqli_query($db, $sql);
+
 }
+
+function addComment($ID, $comment) {
+
+    $db = getConnection();
+    $sql = "UPDATE formulario 
+            SET COMENTARIO = $comment 
+            WHERE idFormulario = $ID";
+    $result = mysqli_query($db, $sql);
+    
+    }
 
 ?>

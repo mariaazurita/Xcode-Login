@@ -2,6 +2,7 @@
 require_once('Login.php');
 include ('ContactTable.php');
 include ('UpdateStatus.php');
+include ('Comments.php');
 header('Access-Control-Allow-Origin: *');
 header("Access-Control-Allow-Headers: X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Request-Method, Authorization");
 header("Access-Control-Allow-Methods: GET, POST, OPTIONS, PUT, DELETE");
@@ -50,6 +51,16 @@ if($stringCheck == 'login'){
     $_POST = json_decode(array_keys($_POST)[0], true);
     $arregloPatch = ['ID' => $_POST["ID"], 'state'=> $_POST["ESTATUS"] ];
     updateStatus( $arregloPatch['state'], $arregloPatch['ID']);
+
+} elseif($uri[3] == 'comment') {
+
+    $_POST = json_decode(array_keys($_POST)[0], true);
+    $arregloComments = ['ID' => $_POST["ID"], 'TASK' => $_POST["TASK"]];
+    if($arregloComments['TASK']) {
+        addComment($arregloComments['ID'], $_POST["MESSAGE"] );
+    } else {
+        deleteComment($arregloComments['ID']);
+    }
 }
 
 ?>
