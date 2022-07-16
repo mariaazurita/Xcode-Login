@@ -53,11 +53,11 @@ if($stringCheck == 'login'){
     updateStatus( $arregloPatch['state'], $arregloPatch['ID']);
 
 } elseif($uri[3] == 'comment') {
-
-    $_POST = json_decode(array_keys($_POST)[0], true);
-    $arregloComments = ['ID' => $_POST["ID"], 'TASK' => $_POST["TASK"]];
+    $arregloComments = json_decode(file_get_contents('php://input'), true);
+    //$_POST = json_decode(array_keys($_POST)[0], true);
+    //$arregloComments = ['ID' => $_POST["ID"], 'TASK' => $_POST["TASK"]];
     if($arregloComments['TASK']) {
-        addComment($arregloComments['ID'], $_POST["MESSAGE"] );
+        addComment($arregloComments['ID'], $arregloComments["MESSAGE"] );
     } else {
         deleteComment($arregloComments['ID']);
     }

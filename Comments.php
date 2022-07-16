@@ -25,7 +25,7 @@ function addComment($ID, $comment) {
 
     $db = getConnection();
     $sql = "UPDATE formulario 
-            SET COMENTARIO = $comment 
+            SET COMENTARIO = '$comment' 
             WHERE idFormulario = $ID";
     $result = mysqli_query($db, $sql);
     
